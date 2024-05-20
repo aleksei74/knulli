@@ -1,11 +1,21 @@
 # 2024/xx/xx - batocera.linux 40 -
 ### Special Notes
-The standalone Citra emulator has migrated to it's successor, Lemonade emulator. You should be able to move your saves from /userdata/saves/3ds/citra to the equivalent lemonade directory.
+Batocera now has a global battery mode option under Game Setting to determine the power mode when a handheld is unplugged.
+To potentially improve battery consumption, you can adjust the mode the handheld operates at when running on battery.
+By default the power mode will be set to `balanced` mode when unplugged. Other options are `highperformance` or `powersave`
+Note: The `powersave` mode will have the biggest impact on CPU performance whilst gaming to reduce battery consumption as much as possible.
+
+Singe games now have it's own system. Move any singe related games from rom/daphne to the roms/singe directory.
+Singe games in the roms/daphne folder will no longer work.
+You can determine a Singe game by the folder containing a .singe file.
 ### Hardware
 Add support for the Pironman case with RPI4 devices.
 Add support for OrangePi Zero 3 (all variants)
 Add support for Radxa Rock 3C
 Initial support for the Lenovo Legion Go
+Support for Nvidia cards requiring the legacy 340.108 driver.
+Add support for the Ayaneo 2S
+Add support for the Ayaneo Air Plus (6800U) model
 ### Added
 - Support for Lexaloffle Voxatron (needs official engine, no emulator provided)
 - C64: support for REU (RAM Expansion Unit), .d71 and .g64 ROM format
@@ -17,7 +27,10 @@ Initial support for the Lenovo Legion Go
 - DMD server (handling any dmd supported by libdmd) integrated with vpinball
 - Support for multi screens (for pincab, mame multi games)
 - Evmapy keys file to help exit running flatpak app
-- Steering wheel support for Thrustmaster T150RS
+- Steering wheel support for:
+  - Thrustmaster T150RS
+  - Thrustmaster T80 (gamepad mode only)
+  - Driving Wheel SV200
 ### Fixed
 - RG552 Splash-screen rotation
 - RG552 Vibrator enabled
@@ -33,6 +46,8 @@ Initial support for the Lenovo Legion Go
 - Daphne crosshair not hidden by default when a light gun is detected
 - Libretro-mesen light gun not loading up
 - Vulkan driver version via System Information whne using a multi-GPU systems was sometimes wrong
+- Fix SteamDeck LCD mono audio which snuck in with the v39 release.
+- ScummVM configuration file location & ensure native file system is turned off
 ### Changed
 - RK3326 Replaced the mali-G31 driver with mesa3d
 - Amiga BIOS files now go into the bios/amiga/ subfolder
@@ -43,6 +58,7 @@ Initial support for the Lenovo Legion Go
 - Preferred vulkan driver name now listed in System Information
 - Start advisiong people on Vulkan GPU driver capabilities for Emualtors
 - Added additional Atari Lynx extensions for Beetle Lynx & Handy
+- Name the Bluetooth connection based on the host system hardware name.
 ### Updated
 - Retroarch to 1.18.0
 - Libretro cores for retroarch 1.17.0 [#11113](https://github.com/batocera-linux/batocera.linux/pull/11113/files)
@@ -54,13 +70,13 @@ Initial support for the Lenovo Legion Go
 - Mupen64plus-video-glide64mk2 bump to Jun 11, 2023 build
 - Mupen64plus-video-rice bump to Jun 11, 2023 build
 - Mupen64plus-gliden64 bump to Feb 18, 2024 build
-- PPSSPP: bump to 1.17.1
-- Duckstation: bump to Feb 25, 2024 build
-- Libretro-ppsspp: bump to 1.17.1
+- PPSSPP: to May 15, 2024 build
+- Duckstation to v0.1-6720
+- Libretro-PPSSPP: to May 15, 2024 build
 - Libretro-81: bump to Nov 1, 2023 build
 - Libretro-fbneo: bump to Feb 23, 2024 build (v1.0.0.03)
 - Libretro-genesisplusgx: bump to Feb 23, 2024 build
-- Libretro-mame: bump to Apr 5, 2024 build (mame 0.264)
+- Libretro-mame: to 0.265
 - Libretro-mame2003-plus: bump to Feb 21, 2024 build
 - Libretro-mupen64plus-next: bump to Feb 6, 2024 build
 - Libretro-neocd: bump to Feb 1, 2024 build
@@ -68,54 +84,94 @@ Initial support for the Lenovo Legion Go
 - Libretro-stella: bump to Jan 2, 2024 build
 - Libretro-swanstation: bump to Jan 25, 2024 build
 - Libretro-pcsx: bump to Feb 14, 2024 build
-- Libretro-flycast: bump to v2.3
-- Flycast: bump to v2.3
-- Redream to 1.5.0-1103-g47bc2b7
-- Ikemen Go to 0.99
+- Libretro-Flycast: bump to v2.3.2
+- Flycast: bump to v2.3.2
+- Redream to 1.5.0-1127-g6b62eff
+- Ikemen Go to May 17, 2024 build
 - Amiberry to 5.6.8
-- GroovyMAME to 0.264 SR 0.220b
-- DOSBox-Staging to 0.81.0
+- GroovyMAME to 0.265 SR 0.220c
+- DOSBox-Staging to 0.81.1
 - DOSBox-X to 2024.03.01
 - SimCoupe to 1.2.13
 - Tsugaru to 20240223
-- Redream (x86_64) to Mar 10, 2024 build
+- Redream to 1.5.0-1125-g0f0a5c3
 - Fallout 1 CE to v1.1.0 (March 2024 release)
 - DevilutionX to 1.5.2
 - Commander Genius to 3.5.0
 - Kodi to 20.5-Nexus
-- RPCS3 to 0.0.31
-- Solarus-engine: bump to Mar 10, 2024 build
-- Cemu to v2.0-72
+- RPCS3 to 0.0.32-16476
+- Solarus-engine: bump to Apr 27, 2024 build
+- Cemu to v2.0-82
 - Sonic3-AIR to v24.02.02.0-stable
 - Ruffle to 2024-03-28
-- Xenia Canary to build 122f58c (Commits on Mar 26, 2024)
-- Xemu to v0.7.120
+- Xenia Canary to build 5bbba85 (Commits on May 14, 2024)
+- Xemu to v0.7.121
 - ScummVM to 2.8.1
 - fheroes2 to 1.0.13
-- PCSX2 to v1.7.5663
-- Play! & Libretro Play! to Apr 3, 2024 builds
-- Dolphin to 5.0-21303
+- PCSX2 to v1.7.5817
+- Play! & Libretro Play! to 0.65-1
+- Dolphin to 5.0-21543
+- Libretro-hatarib: bump to v0.3
+- Hatari to v2.5.0
+- Citra to r64e3e9f
+- ETLegacy to v2.82.1
+- GZDoom to v4.12.2
+- Fallout2-CE to v1.3.0
+- Raze to v1.10.2
+- Vice to v3.8
+- The Force Engine to Apr 29, 2024 build (Supports HD Textures)
+- DXX-Rebirth to May 6, 2024 build
+- BigPemu to v113 (Linux Build)
+- Xenia to v1.0.2815
+- Vita3K to May 14, 2024 build
+- Sonic-Mania to Mar 7, 2024 build
+- Libretro-Cap32 to May 15, 2024 build
+- Libretro-Arduous to May 14, 2024 build
+- Libretro-Beetle-PCE to May 3, 2024 build
+- Libretro-Beetle-PCE-Fast to May 10, 2024 build
+- Eduke32 to May 14, 2024 build
+- Hurrican to Dec 27, 2023 build
+- Sonic Mania to May 10, 2024 build
+- VCMI to v1.5.1
+- Xash3d-fwgs to May 15, 2024 build
+- AppleWin to May 12, 2024 build
+- MelonDS to May 16, 2024 build
+- Snes9x to May 14, 2024 build
+- TheXTech to v1.3.6.5
+- Libretro-WASM4 to v2.7.0
+- Libretro-Tic80 to May 16, 2024 build
+- Libretro-Chailove to May 18, 2024 build
+- Libretro-Fake08 to Apr 17, 2024 build
+- Libretro-Freechaf to Apr 26, 2024 build
+- Libretro-MiniVMac to Apr 26, 2024 build
+- Libretro-MrBoom to May 17, 2024 build
+- Libretro-Picodrive to Mar 27, 2024 build
 ### System
 - Mainline Kernel 6.6.y bump to 6.6.23
-- Nvidia Production driver to 550.67
+- Nvidia Production driver to 550.78
 - Nvidia Legacy driver to 470.239.06
 - Wayland-protocols to 1.33
 - Wlroots to 0.17.1
 - Sway to 1.9
-- Mesa3d to 24.0.4
+- Mesa3d to 24.0.7
 - RPI kernel to 6.6.20
 - Pipewire to 1.0.4
-- X86_64 kernel to 6.8.4
+- X86_64 kernel to 6.9
 - Switchres 0.220
 - Btop to 1.3.2
-- Linux firmware to 20240312
+- Linux firmware to 20240513
 - Buildroot to 2024.02.1
 - Xpad-Noone to Jan 10, 2024
-- XpadNeo to Mar 11, 2024
+- XpadNeo to Apr 23, 2024 build
 - Xone to Mar 30, 2024
 - Fdupes to 2.3.0
-- FAudio to 24.03
+- FAudio to 24.05
 - Sound Open Firmware to 2023.12.1
+- RyzenAdj to v0.15.0
+- Qt to 6.7.0
+- DXVK to 2.3.1
+- DXVK-NVAPI to 0.7.0
+- VKD3D-Proton to v2.12
 
 # 2024/03/04 - batocera.linux 39 - Painted Lady
 ### Special Notes

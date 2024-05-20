@@ -33,6 +33,7 @@ f_usage() {
     echo "${0} setRotation (0|1|2|3)" >&2
     echo "${0} getRotation" >&2
     echo "${0} getDisplayMode" >&2
+    echo "${0} refreshRate" >&2
 }
 
 f_minTomaxResolution() {
@@ -91,7 +92,7 @@ f_minTomaxResolution() {
         if [ -z "$MAXRATE" ] || [ "$CURRENTRATE" = "$MAXRATE" ]; then
             echo "We have a match, nothing to do..." >> $log
             if [ "${CURRENT_ROTATION}" != "0" ]; then
-                batocera-resolution setRotation "${CURRENT_ROTATION}"
+                batocera-resolution --screen "${PSCREEN}" setRotation "${CURRENT_ROTATION}"
             fi
             exit 0
         fi
@@ -110,7 +111,7 @@ f_minTomaxResolution() {
                 echo "New resolution applied = Output: ${OUTPUT} Resolution: ${PARTRES} Rate: ${MAXRATE}" >> "$log"
                 xrandr --output "$OUTPUT" --mode "$PARTRES" --rate "$MAXRATE"
                 if [ "${CURRENT_ROTATION}" != "0" ]; then
-                    batocera-resolution setRotation "${CURRENT_ROTATION}"
+                    batocera-resolution --screen "${PSCREEN}" setRotation "${CURRENT_ROTATION}"
                 fi
                 exit 0
             fi
@@ -127,7 +128,7 @@ f_minTomaxResolution() {
                 echo "Using old method = Output: ${OUTPUT} Mode: ${SUGGRESOLUTION}" >> $log
                 xrandr --output "${OUTPUT}" --mode "${SUGGRESOLUTION}"
                 if [ "${CURRENT_ROTATION}" != "0" ]; then
-                    batocera-resolution setRotation "${CURRENT_ROTATION}"
+                    batocera-resolution --screen "${PSCREEN}" setRotation "${CURRENT_ROTATION}"
                 fi
                 exit 0
             fi
@@ -178,13 +179,13 @@ case "${ACTION}" in
                 echo "setMode: Output: ${OUTPUT} Resolution: ${PARTRES} Rate: ${PARTHZ}" >> $log
                 xrandr --output "${OUTPUT}" --mode "${PARTRES}" --rate "${PARTHZ}"
                 if [ "${CURRENT_ROTATION}" != "0" ]; then
-                    batocera-resolution setRotation "${CURRENT_ROTATION}"
+                    batocera-resolution --screen "${PSCREEN}" setRotation "${CURRENT_ROTATION}"
                 fi
             else
                 echo "setMode: Output: ${OUTPUT} Mode: ${MODE}" >> $log
                 xrandr --output "${OUTPUT}" --mode "${MODE}"
                 if [ "${CURRENT_ROTATION}" != "0" ]; then
-                    batocera-resolution setRotation "${CURRENT_ROTATION}"
+                    batocera-resolution --screen "${PSCREEN}" setRotation "${CURRENT_ROTATION}"
                 fi
             fi
             # check if there was an error setting the mode
@@ -198,7 +199,11 @@ case "${ACTION}" in
     "currentMode")
 	xrandr --listModes "${PSCREEN}" | grep -E '\*$' | sed -e s+'\*$'++ -e s+'^\([^ ]*\) .*$'+"\1"+
     ;;
-    
+
+    "refreshRate")
+    xrandr --listModes "${PSCREEN}" | grep -E '\*$' | sed -e 's/\*$//' -e 's/^\([^ ]*\) .*/\1/' | awk -F'[.]' '{print $2}'
+    ;;
+
     "currentResolution")
 	xrandr --currentResolution "${PSCREEN}" | tail -n1
     ;;
