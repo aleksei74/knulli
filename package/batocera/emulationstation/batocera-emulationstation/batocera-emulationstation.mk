@@ -112,6 +112,8 @@ define BATOCERA_EMULATIONSTATION_EXTERNAL_POS
 		$(@D)/locale/lang/$$(basename $$P)/LC_MESSAGES/emulationstation2.po.tmp \
 	    $$P/batocera-es-system.po > \
 	    $(@D)/locale/lang/$$(basename $$P)/LC_MESSAGES/emulationstation2.po; fi; done
+	    
+	    cp $(BR2_EXTERNAL_BATOCERA_PATH)/assets/NanumSquareNeo-bRg.ttf $(@D)/resources/NanumMyeongjo.ttf
 endef
 
 define BATOCERA_EMULATIONSTATION_RESOURCES
