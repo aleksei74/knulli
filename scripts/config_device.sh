@@ -76,6 +76,6 @@ fi
 
 echo "Files updated successfully."
 
-rm -rf $(BR2_EXTERNAL_BATOCERA_PATH)/output/h700/build/batocera-emulationstation-*
-rm -rf $(BR2_EXTERNAL_BATOCERA_PATH)/output/h700/build/mangohud-*
-rm -rf $(BR2_EXTERNAL_BATOCERA_PATH)/output/h700/build/sdl2-*
+rm -rf $SCRIPT_DIR/output/h700/build/batocera-emulationstation-*
+rm -rf $SCRIPT_DIR/output/h700/build/mangohud-*
+rm -rf $SCRIPT_DIR/output/h700/build/sdl2-*
